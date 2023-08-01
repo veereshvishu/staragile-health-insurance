@@ -18,7 +18,7 @@ spec:
         imagePullPolicy: Always
         ports:
         - name: sbapp
-          containerPort: 8086
+          containerPort: 8082
           protocol: TCP
 ---
 apiVersion: v1
@@ -34,6 +34,6 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8086
+  - port: 8082
   selector:
     app: sbapp
