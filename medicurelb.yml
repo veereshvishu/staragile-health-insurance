@@ -1,31 +1,41 @@
+
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: nginx-webapp
+  name: sbapp
 spec:
   selector:
     matchLabels:
-      app: nginx-webapp
-  replicas: 1
+      app: sbapp
+  replicas: 3
   template:
     metadata:
       labels:
-        app: nginx-webapp
+        app: sbapp
     spec:
       containers:
-      - name: nginx
-        image: nginx:latest
+      - name: sbapp
+        image: veereshvishu/health-insure-me:3.0
+        imagePullPolicy: Always
         ports:
-        - containerPort: 80
+        - name: sbapp
+          containerPort: 8082
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: nginx-service
+  name: sbapp-lb
+  labels:
+    app: sbapp
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
 spec:
-  type: LoadBalancer  # Use LoadBalancer type to expose externally
+  type: NodePort 
   ports:
-  - port: 8090  # Port exposed by the Service
-    targetPort: 80  # Port to forward traffic to the pods
+  - port: 8089
+    targetPort: 8082
   selector:
-    app: nginx-webapp
+    app: sbapp
