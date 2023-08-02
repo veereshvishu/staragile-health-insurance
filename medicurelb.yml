@@ -34,6 +34,8 @@ metadata:
 spec:
   type: LoadBalancer
   ports:
-  - port: 8082
+  - port: 8089
+    protocol: TCP
+    targetPort: 8082
   selector:
     app: sbapp
