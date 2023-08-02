@@ -33,9 +33,12 @@ metadata:
     service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
     service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
 spec:
-  type: LoadBalancer
+  type: NodePort
   ports:
   - port: 8089
     targetPort: 8082
+    nodePort: 30000  # Choose a port number in the valid NodePort range (30000-32767)
   selector:
     app: sbapp
+
+
