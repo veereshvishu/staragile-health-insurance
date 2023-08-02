@@ -35,7 +35,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 8089
-    protocol: http
+    protocol: TCP
     targetPort: 8082
   selector:
     app: sbapp
