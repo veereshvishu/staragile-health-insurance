@@ -28,8 +28,12 @@ metadata:
   name: sbapp-lb
   labels:
     app: sbapp
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
 spec:
-  type: NodePort 
+  type: LoadBalancer
   ports:
   - port: 8089
     targetPort: 8082
