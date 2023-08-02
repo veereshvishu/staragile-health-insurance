@@ -21,15 +21,3 @@
     become : yes
     become_user : ubuntu
 
-  - name: Copy file with owner and permission, using symbolic representation
-    ansible.builtin.copy:
-      src: ./service.yml
-      dest: /home/ubuntu/service.yml
-      owner: ubuntu
-      group: ubuntu
-      mode: u=rw,g=r,o=r
-
-  - name : Creating pods in kubernetes
-    command : sudo kubectl create -f /home/ubuntu/service.yml
-    become : yes
-    become_user : ubunt
