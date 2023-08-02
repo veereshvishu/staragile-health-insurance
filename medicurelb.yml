@@ -19,6 +19,7 @@ spec:
         ports:
         - name: sbapp
           containerPort: 8082
+          protocol: TCP
       
 ---
 apiVersion: v1
