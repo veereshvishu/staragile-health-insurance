@@ -19,7 +19,7 @@ spec:
         ports:
         - name: sbapp
           containerPort: 8082
-          protocol: TCP
+      
 ---
 apiVersion: v1
 kind: Service
@@ -35,7 +35,7 @@ spec:
   type: LoadBalancer
   ports:
   - port: 8089
-    protocol: TCP
+    protocol: http
     targetPort: 8082
   selector:
     app: sbapp
