@@ -1,39 +1,37 @@
-
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: sbapp
+  name: medicure-deploy
+  labels:
+    app: medicure-mvn-app
 spec:
+  replicas: 3
   selector:
     matchLabels:
-      app: sbapp
-  replicas: 3
+      app: medicure-mvn-app
   template:
     metadata:
       labels:
-        app: sbapp
+        app: medicure-mvn-app
     spec:
       containers:
-      - name: sbapp
-        image: veereshvishu/health-insure-me:3.0
-        imagePullPolicy: Always
+      - name: medicure-mvn-container
+        image: rahul9711/medicure:1.0
         ports:
-        - name: sbapp
-          containerPort: 8082
-          protocol: TCP
+        - containerPort: 8082
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: sbapp-lb
+  name: medicure-np-service
   labels:
-    app: sbapp
+    app: medicure-mvn-app
 spec:
-  type: LoadBalancer
-  ports:
-  - port: 8089
-    targetPort: 8082
   selector:
-    app: sbapp
+    app: medicure-mvn-app
 
-
+  type: NodePort
+  ports:
+  - nodePort: 31000
+    port: 8082
+    targetPort: 8082
