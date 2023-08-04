@@ -1,37 +1,39 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: medicure-deploy
-  labels:
-    app: medicure-mvn-app
+  name: sbapp
 spec:
-  replicas: 3
   selector:
     matchLabels:
-      app: medicure-mvn-app
+      app: sbapp
+  replicas: 3
   template:
     metadata:
       labels:
-        app: medicure-mvn-app
+        app: sbapp
     spec:
       containers:
-      - name: medicure-mvn-container
-        image: rahul9711/medicure:1.0
+      - name: sbapp
+        image: nik848/medicure:1.0
+        imagePullPolicy: Always
         ports:
-        - containerPort: 8082
+        - name: sbapp
+          containerPort: 8082
+          protocol: TCP
 ---
 apiVersion: v1
 kind: Service
 metadata:
-  name: medicure-np-service
+  name: sbapp-lb
   labels:
-    app: medicure-mvn-app
+    app: sbapp
+  annotations:
+    service.beta.kubernetes.io/oci-load-balancer-shape: "flexible"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-min: "10"
+    service.beta.kubernetes.io/oci-load-balancer-shape-flex-max: "100"
 spec:
-  selector:
-    app: medicure-mvn-app
-
-  type: NodePort
+  type: LoadBalancer
   ports:
-  - nodePort: 31000
-    port: 8082
-    targetPort: 8082
+  - port: 8082
+  selector:
+    app: sbapp
