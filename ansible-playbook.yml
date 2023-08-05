@@ -3,20 +3,5 @@
   become: true
   connection : ssh
   tasks : 
-  - name: updating apt
-    command : sudo apt-get update
-
-  
-
-  - name: Copy file with owner and permission, using symbolic representation
-    ansible.builtin.copy:
-      src: ./medicurelb.yml
-      dest: /home/ubuntu/medicurelb.yml
-      owner: ubuntu
-      group: ubuntu
-      mode: u=rw,g=r,o=r
-   
-  - name : Creating pods in kubernetes
-    command : sudo kubectl create -f /home/ubuntu/medicurelb.yml
-    become : yes
-    become_user : ubuntu
+  - name: Deploy Docker Container
+    command: docker run -itd -p 8086:8082 veereshvishu/health-insure-me:3.0
